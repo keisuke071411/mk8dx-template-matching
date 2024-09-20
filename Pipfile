@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+fastapi = "*"
+pydantic = "*"
+matplotlib = "*"
+opencv-python = "*"
+python-multipart = "*"
+uvicorn = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
