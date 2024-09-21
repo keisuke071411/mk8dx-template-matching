@@ -1,32 +1,12 @@
 # module
-import os
+from fastapi import APIRouter
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 from fastapi import FastAPI, File
 from pydantic import BaseModel
-from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
-from dotenv import load_dotenv
 
-load_dotenv()
-
-app = FastAPI()
-
-origins = [
-    os.getenv("FRONTEND_URL"),
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+router = APIRouter()
 
 class ImageRequest(BaseModel):
     img_url: str
@@ -66,7 +46,7 @@ def check_result_screen(screenshot_img, template_img):
 
 
 # スクリーンショットが取得されたときに呼び出される処理
-@app.post("/")
+@router.post("/")
 def process_screenshot(file: bytes = File()):
     # 画像の読み込み
     template_path = '/Users/morookakeisuke/Desktop/rye-demo-project/template.jpg'
@@ -83,7 +63,3 @@ def process_screenshot(file: bytes = File()):
     else:
         print("No match: リザルト画面ではありません。")
         return 'fail'
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
