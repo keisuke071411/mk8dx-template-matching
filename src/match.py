@@ -1,10 +1,14 @@
 # module
-from fastapi import APIRouter
+import os
 import cv2
+import requests
 import numpy as np
 from fastapi import FastAPI, File
 from pydantic import BaseModel
-import numpy as np
+from dotenv import load_dotenv
+from fastapi import APIRouter
+
+load_dotenv()
 
 router = APIRouter()
 
@@ -49,8 +53,13 @@ def check_result_screen(screenshot_img, template_img):
 @router.post("/")
 def process_screenshot(file: bytes = File()):
     # 画像の読み込み
-    template_path = '/Users/morookakeisuke/Desktop/rye-demo-project/template.jpg'
-    template = cv2.imread(template_path)  # グレースケールにせず、カラー画像として読み込む
+    response = requests.get(os.getenv("TEMPLATE_IMAGE_URL"))
+
+    # 画像データをnumpy配列に変換
+    image_array = np.asarray(bytearray(response.content), dtype=np.uint8)
+
+    # 画像データをデコードし、cv2形式で読み込む
+    template = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
     screenshot = cv2.imdecode(np.frombuffer(file, np.uint8), cv2.IMREAD_COLOR)
 
     if screenshot is None:

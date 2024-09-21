@@ -13,6 +13,7 @@ python-multipart = "*"
 python-dotenv = "*"
 gunicorn = "*"
 uvicorn = "*"
+requests = "*"
 
 [dev-packages]
 
