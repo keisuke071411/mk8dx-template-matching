@@ -1,4 +1,5 @@
 # module
+import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,12 +7,14 @@ from fastapi import FastAPI, File
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",
+    os.getenv("FRONTEND_URL"),
 ]
 
 app.add_middleware(
