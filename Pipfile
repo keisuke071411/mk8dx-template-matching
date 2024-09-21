@@ -10,8 +10,9 @@ pydantic = "*"
 matplotlib = "*"
 opencv-python = "*"
 python-multipart = "*"
-uvicorn = "*"
 python-dotenv = "*"
+gunicorn = "*"
+uvicorn = "*"
 
 [dev-packages]
 
